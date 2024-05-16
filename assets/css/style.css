@@ -1,0 +1,50 @@
+@import url(bouton.css);
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Popins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background: rgb(65, 127, 147);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: white;
+    width: 800px; 
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/*The intems inside the box */
+
+.container h1 {
+    font-size: 35px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+/*ligne*/
+
+.ligne {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid gray;
+}
+
+#question {
+    margin-bottom: 20px;
+    color: rgb(70, 114, 152);
+}
+
+#options {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+

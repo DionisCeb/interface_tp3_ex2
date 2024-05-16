@@ -1,0 +1,54 @@
+/*Le bouton d'option*/
+.btn {
+    padding: 20px;
+    border: 1px solid rgb(102, 101, 101);
+    background-color: white;
+    color: rgb(102, 101, 101);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+/*Seulement si le bouton est pas disabled*/
+.btn:hover:not([disabled]) {  
+    background-color: rgb(102, 101, 101);
+    color: white;
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    pointer-events: none;
+}
+
+/*Le bouton suivant*/
+#suivant-btn { 
+    display: none;
+    margin: 20px auto;
+    padding: 20px;
+    width: 200px;
+    background-color: #417f93;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#suivant-btn:hover {
+    background-color: rgb(194, 150, 68);
+    transform: scale(1.2);
+}
+
+
+.correct {
+    background-color: rgb(86, 164, 86);
+    color: white;
+}
+
+.incorrect{
+    background-color: rgb(188, 98, 98);
+    color: white;
+}
