@@ -14,13 +14,15 @@ let score = 0;
     score = 0; 
     nextButton.innerHTML = "Suivant";
 
-   nextButton.removeEventListener("click", startQuiz);
+    nextButton.removeEventListener("click", showScore);
     if(currentQuestionIndex >= questions.length) {
+        console.log("Showing score...");
         showScore();
+        nextButton.removeEventListener("click", startQuiz);
         currentQuestionIndex = 0;
-        nextButton.removeEventListener("click", showScore)
     } else {
         showQuestion();
+        currentQuestionIndex++;
     }
 } 
 
@@ -29,13 +31,9 @@ let score = 0;
 function showQuestion() {
     resetState();
 
-    console.log("Current Question Index:", currentQuestionIndex);
-    
-
-    currentQuestion = new Question(questions[currentQuestionIndex].question, questions[currentQuestionIndex].answers);
     console.log("Current Question:", currentQuestion);
+    currentQuestion = new Question(questions[currentQuestionIndex].question, questions[currentQuestionIndex].answers);
     questionElement.innerHTML = currentQuestion.text;
-
     console.log("Question Text:", currentQuestion.text);
 
     answerButtons.innerHTML = "";
@@ -45,6 +43,7 @@ function showQuestion() {
         button.classList.add("btn");
         // Pass the isCorrect flag as a data attribute
         button.dataset.isCorrect = answer.correct;
+        console.log(`Answer ${index + 1} isCorrect:`, answer.correct);
 
         button.addEventListener("click", () => selectAnswer(index));
         answerButtons.appendChild(button);
@@ -65,9 +64,13 @@ function selectAnswer(index) {
     const isCorrect = selectedBtn.dataset.isCorrect === "true";
     if (isCorrect) {
         selectedBtn.classList.add("correct");
+        console.log(`correct:`);
         score++;
+        console.log(score);
     } else {
         selectedBtn.classList.add("incorrect");
+        console.log(`incorrect:`);
+        console.log(score);
     }
 
     // Disable all answer buttons after clicking
