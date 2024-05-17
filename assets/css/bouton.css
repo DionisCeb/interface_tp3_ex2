@@ -15,7 +15,7 @@
 .btn:hover:not([disabled]) {  
     background-color: rgb(102, 101, 101);
     color: white;
-    transform: scale(0.98);
+    transform: scale(0.99);
 }
 
 .btn:disabled {
@@ -39,8 +39,9 @@
 
 #suivant-btn:hover {
     background-color: rgb(194, 150, 68);
-    transform: scale(1.2);
+    transform: scale(0.95);
 }
+
 
 
 .correct {
