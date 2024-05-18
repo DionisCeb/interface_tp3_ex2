@@ -1,8 +1,6 @@
 import questions from "./donnees/questions.js";
 import Question from "./classes/Question.js";
-import ScoreTracker from "./classes/Pointage.js";
 
-let scoreTracker = new ScoreTracker();
 let currentQuestion;
 let currentQuestionIndex = 0;
 let score = 0;
@@ -28,9 +26,9 @@ function startQuiz() {
 function showQuestion() {
     resetState();
 
-    currentQuestion = new Question(questions[currentQuestionIndex].question, questions[currentQuestionIndex].answers, nextButton, scoreTracker);
+    currentQuestion = new Question(questions[currentQuestionIndex].question, questions[currentQuestionIndex].answers);
     currentQuestion.displayQuestion();
-    currentQuestion.displayAnswers(currentQuestion.selectAnswer);
+    currentQuestion.displayAnswers(selectAnswer);
 }
 
 function resetState() {
@@ -41,13 +39,29 @@ function resetState() {
 }
 
 function selectAnswer(index) {
-    currentQuestion.selectAnswer(index);
+    const selectedBtn = document.getElementById("options").children[index];
+    const isCorrect = selectedBtn.dataset.isCorrect === "true";
+    if (isCorrect) {
+        selectedBtn.classList.add("correct");
+        score++;
+    } else {
+        selectedBtn.classList.add("incorrect");
+    }
+
+    Array.from(document.getElementById("options").children).forEach(button => {
+        if(button.dataset.isCorrect === "true") {
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+
+    nextButton.style.display = "block";
 }
 
-
 function showScore() {
-    scoreTracker.displayScore(questionElement, questions.length);
+
     resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
     nextButton.innerHTML = "Play again";
     nextButton.style.display = "block";
     
