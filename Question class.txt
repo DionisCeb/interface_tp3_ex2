@@ -1,0 +1,32 @@
+// Question class
+class Question {
+    constructor(text, answers) {
+        this.text = text;
+        this.answers = answers;
+    }
+
+    displayQuestion() {
+        document.querySelector("#question").innerHTML = this.text;
+    }
+
+    displayAnswers(selectAnswerCallback) {
+        const answerButtons = document.querySelector("#options");
+        answerButtons.innerHTML = "";
+
+        this.answers.forEach((answer, index) => {
+            const button = document.createElement("button");
+            button.innerText = answer.text;
+            button.classList.add("btn");
+            button.dataset.isCorrect = answer.correct;
+
+            button.addEventListener("click", () => selectAnswerCallback(index));
+            answerButtons.appendChild(button);
+        });
+    }
+
+    isCorrect(index) {
+        return this.answers[index].correct;
+    } 
+}
+
+export default Question;
