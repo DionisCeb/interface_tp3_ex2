@@ -53,3 +53,11 @@
     background-color: rgb(188, 98, 98);
     color: white;
 }
+
+
+
+/*Start quizz*/
+.btn.startquiz {
+    background-color: rgb(184, 103, 103);
+    color: white;
+}

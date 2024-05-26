@@ -1,114 +1,127 @@
 import questions from "./donnees/questions.js";
 import Question from "./classes/Question.js";
+import Pointage from "./classes/Pointage.js";
+import StartQuiz from "./classes/StartQuiz.js";
 
-const questionElement = document.querySelector("#question");
-const answerButtons = document.querySelector("#options");
-const nextButton = document.querySelector("#suivant-btn");
-
-let currentQuestion;
+// Déclaration des variables globales
+let pointage = undefined;
+let currentQuestion = undefined;
 let currentQuestionIndex = 0;
-let score = 0;
+
+// Sélection des éléments du HTML
+const nextButton = document.querySelector("#suivant-btn");
+const answerButtons = document.querySelector("#options");
+const questionElement = document.querySelector("#question");
 
 
- function startQuiz() {
-    score = 0; 
+// Initialiser les variable pour le changement des sections
+const startQuizButton = document.querySelector("#startquiz_btn");
+const startQuizSection = document.querySelector("#startquiz_section");
+const quizzSection = document.querySelector("#quizz_section");
+
+
+
+// Fonction pour afficher le quiz
+function showQuiz() {
+    // Masquage de la section de démarrage du quiz
+    quizzSection.classList.add("hide");
+    // Création d'une nouvelle instance de la classe StartQuiz
+    let quiz =  new StartQuiz(quizzSection, startQuizSection, startQuizButton);
+    // Affichage de la page de démarrage du quiz
+    quiz.showLandingPage();
+    // Démarrage du quiz
+    startQuiz();
+}
+
+// Fonction pour démarrer le quiz
+function startQuiz() {
+    // Initialisation du score
+    pointage = new Pointage();
+
+    // affichage du score current
+    getCurrentScore();
+    // réinitialisation de l'index de la question courante
+    currentQuestionIndex = 0;
+    // changement du texte du bouton "Suivant
     nextButton.innerHTML = "Suivant";
+    // l'écouteur d'événements pour le bouton dont change les questions
+    nextButton.removeEventListener("click", startQuiz);
 
-   nextButton.removeEventListener("click", startQuiz);
+    // Vérification s'il y a encore des questions à afficher
     if(currentQuestionIndex >= questions.length) {
+        //affichage du score final
         showScore();
-        currentQuestionIndex = 0;
-        nextButton.removeEventListener("click", showScore)
+        nextButton.removeEventListener("click", showScore);
     } else {
+        //affichage de la première question
         showQuestion();
     }
 } 
 
-
-
 function showQuestion() {
+    //réinitialisation de l'état
     resetState();
 
-    console.log("Current Question Index:", currentQuestionIndex);
-    
-
-    currentQuestion = new Question(questions[currentQuestionIndex].question, questions[currentQuestionIndex].answers);
-    console.log("Current Question:", currentQuestion);
-    questionElement.innerHTML = currentQuestion.text;
-
-    console.log("Question Text:", currentQuestion.text);
-
-    answerButtons.innerHTML = "";
-    currentQuestion.answers.forEach((answer, index) => {
-        const button = document.createElement("button");
-        button.innerText = answer.text;
-        button.classList.add("btn");
-        // Pass the isCorrect flag as a data attribute
-        button.dataset.isCorrect = answer.correct;
-
-        button.addEventListener("click", () => selectAnswer(index));
-        answerButtons.appendChild(button);
-    });
+    //! Création d'une nouvelle instance de la classe Question
+    currentQuestion = new Question(
+        questions[currentQuestionIndex].question, 
+        questions[currentQuestionIndex].answers, 
+        nextButton, 
+        pointage
+    );
+    // Affichage de la question
+    currentQuestion.displayQuestion();
+    // Affichage des options de réponse
+    currentQuestion.displayAnswers(currentQuestion.selectAnswer);
 }
 
 function resetState() {
-    nextButton.style.display = "none"
+    nextButton.classList.add("hide");
+    
     while(answerButtons.firstChild) {
         answerButtons.removeChild(answerButtons.firstChild);
     }
 }
 
-
-// Function to handle user selection of an answer
-function selectAnswer(index) {
-    const selectedBtn = answerButtons.children[index];
-    const isCorrect = selectedBtn.dataset.isCorrect === "true";
-    if (isCorrect) {
-        selectedBtn.classList.add("correct");
-        score++;
-    } else {
-        selectedBtn.classList.add("incorrect");
-    }
-
-    // Disable all answer buttons after clicking
-    Array.from(answerButtons.children).forEach(button => {
-        if(button.dataset.isCorrect === "true") {
-            button.classList.add("correct");
-        }
-        button.disabled = true;
-    });
-
-    nextButton.style.display = "block";
-}
-
-// Function to show the final score
 function showScore() {
-    console.log("showScore");
+
+    getCurrentScore();
+    // Affichage du score final dans l'élément HTML de la question
+    questionElement.innerHTML = `Vous avez gagné ${pointage.getScore()} sur ${questions.length}!`;
+
+    //réinitialisation de l'état
     resetState();
-    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
-    nextButton.innerHTML = "Play again";
-    nextButton.style.display = "block";
+
+    //!Changement du texte du bouton "Suivant"
+    nextButton.innerHTML = "Jouer encore";
+    nextButton.classList.add("show");
     
-    nextButton.addEventListener("click", startQuiz); // Call startQuiz when "Play again" is clicked  
+     //Ajout d'un écouteur d'événements pour redémarrer le quiz lorsque le bouton "Suivant" est cliqué
+    nextButton.addEventListener("click", startQuiz);  
 }
 
 
+//Fonction pour gérer le clic sur le bouton "Suivant"
 function handleNextButton() {
+    //passer à la question suivante
     currentQuestionIndex++;
+    //vérifier s'il reste des questions à afficher
     if(currentQuestionIndex < questions.length) {
-        //Montre la prochaine question s'il y'a
+        //Affichage de la question suivante
         showQuestion();
     } else {
-        //Si y a pas d'autres questions montre le pointage
+        //Affichage du score final
         showScore();
     }
 }
 
+function getCurrentScore() {
+    let currentScore = pointage.getScore();
+}
 
+// Ajout d'un écouteur d'événements pour le clic sur le bouton "Suivant"
 nextButton.addEventListener("click", handleNextButton);
 
+    
+showQuiz();
 
-
-
-
-startQuiz();

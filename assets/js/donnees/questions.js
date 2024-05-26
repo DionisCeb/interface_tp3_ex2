@@ -1,38 +1,38 @@
 const questions = [
     {
-        question: "What is my prefered color?",
+        question: "Quelle fleur est souvent associée à l'amour et à la passion dans la culture occidentale ?",
         answers: [
-            {text: "Red", correct: false},
-            {text: "Green", correct: false},
-            {text: "White", correct: true},
-            {text: "Black", correct: false},
+            {text: "Lys", correct: false},
+            {text: "Tulipe", correct: false},
+            {text: "Rose", correct: true},
+            {text: "Iris", correct: false},
         ]
     },
     {
-        question: "What is my prefered car?",
+        question: "Quelle fleur est un symbole de pureté et d'innocence dans de nombreuses cultures ?",
         answers: [
-            {text: "BMW", correct: false},
-            {text: "Audi", correct: false},
-            {text: "Suzuki", correct: false},
-            {text: "Mercedes", correct: true},
+            {text: "Iris", correct: false},
+            {text: "Marguerite", correct: false},
+            {text: "Jasmin", correct: false},
+            {text: "Lys", correct: true},
         ]
     },
     {
-        question: "What is my prefered brand?",
+        question: "Quelle fleur est traditionnellement offerte pour la fête des mères aux États-Unis ?",
         answers: [
-            {text: "Nike", correct: false},
-            {text: "Puma", correct: true},
-            {text: "Adidas", correct: false},
-            {text: "ZARA", correct: false},
+            {text: "Marguerite", correct: false},
+            {text: "Œillet", correct: true},
+            {text: "Lavande", correct: false},
+            {text: "Rose", correct: false},
         ]
     },
     {
-        question: "What is my prefered browser?",
+        question: "Quelle fleur est connue pour son parfum distinctif et est couramment utilisée dans les parfums ?",
         answers: [
-            {text: "Google", correct: true},
-            {text: "Firefox", correct: false},
-            {text: "Safari", correct: false},
-            {text: "Explorer", correct: false},
+            {text: "Jasmin", correct: true},
+            {text: "Lavande", correct: false},
+            {text: "Rose", correct: false},
+            {text: "Tulipe", correct: false},
         ]
     },
 
